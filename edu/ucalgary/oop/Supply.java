@@ -1,3 +1,7 @@
+/*
+Completed by: Kareem Hussein
+Email: kareem.hussein1@ucalgary.ca
+*/
 package edu.ucalgary.oop;
 
 public class Supply {
