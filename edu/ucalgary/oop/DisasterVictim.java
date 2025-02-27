@@ -2,10 +2,8 @@ package edu.ucalgary.oop;
 
 
 import java.util.ArrayList; 
-// Array list will be used throughout this java file and most lines using this
-// Library has taken insiration from https://www.w3schools.com/java/java_arraylist.asp
 import java.util.Arrays;
-import java.util.List; // To make somethings easier this library is implemented
+import java.util.List; 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Pattern;
 
@@ -14,46 +12,48 @@ public class DisasterVictim {
     private String lastName;
     private String birthDate;
     private static AtomicInteger counter = new AtomicInteger(0);
-    private final int SOCIAL_ID_NUMBER;
-    private List<FamilyRelation> familyRelationship;
+    private final int ASSIGNED_SOCIAL_ID;
+    private List<FamilyRelation> familyConnections;
     private List<MedicalRecord> medicalRecords;
     private List<Supply> personalBelongings;
-    private final String DATE_OF_ENTRY;
+    private final String ENTRY_DATE;
     private String gender;
     private String comments;
+    
     private static final Pattern DATE_PATTERN = Pattern.compile("\\d{4}-\\d{2}-\\d{2}");
 
 
-    // Constructor for when birthDAte is unknown
-    public DisasterVictim(String firstName, String DATE_OF_ENTRY) {
-        if(!isValidDateFormat(DATE_OF_ENTRY)) {
-            throw new IllegalArgumentException("Invalid date format.");
+
+    // Constructor for when birthDate is unknown
+    public DisasterVictim(String firstName, String ENTRY_DATE) {
+        if(!isValidDateFormat(ENTRY_DATE)) {
+            throw new IllegalArgumentException("The entered date is invalid");
         }
         this.firstName = firstName;
-        this.DATE_OF_ENTRY = DATE_OF_ENTRY;
-        this.SOCIAL_ID_NUMBER = generateSocialID();
-        this.familyRelationship = new ArrayList<FamilyRelation>();
+        this.ENTRY_DATE = ENTRY_DATE;
+        this.ASSIGNED_SOCIAL_ID = generateSocialID();
+        this.familyConnections = new ArrayList<FamilyRelation>();
         this.medicalRecords = new ArrayList<MedicalRecord>();
         this.personalBelongings = new ArrayList<Supply>();
     }
 
     // Constructor for when birthDate is known
-    public DisasterVictim(String firstName, String DATE_OF_ENTRY, String birthDate) {
-        if(!isValidDateFormat(DATE_OF_ENTRY)) {
-            throw new IllegalArgumentException("Invalid date format.");
-        } else if(convertDateStringToInt(birthDate) > convertDateStringToInt(DATE_OF_ENTRY)) {
-            throw new IllegalArgumentException("Invalid entry date.");
+    public DisasterVictim(String firstName, String ENTRY_DATE, String birthDate) {
+        if(!isValidDateFormat(ENTRY_DATE)) {
+            throw new IllegalArgumentException("The entered date is invalid");
+        } else if(convertDateStringToInt(birthDate) > convertDateStringToInt(ENTRY_DATE)) {
+            throw new IllegalArgumentException("The entered date is invalid");
         }
         this.firstName = firstName;
-        this.DATE_OF_ENTRY = DATE_OF_ENTRY;
+        this.ENTRY_DATE = ENTRY_DATE;
         this.setDateOfBirth(birthDate);
-        this.SOCIAL_ID_NUMBER = generateSocialID();
+        this.ASSIGNED_SOCIAL_ID = generateSocialID();
     }
     // Getters and Setters
     // Based on the UML we need:
     // - FirstName
     // - LastName
-    // - DateOfBirth (if applicable)
+    // - birthDate (if applicable)
     // - AssignedSocialID
     // - MedicalRecords
     // - PersonalBelongings
@@ -72,28 +72,84 @@ public class DisasterVictim {
     // - isValidDateFormat
     // - convertDateStringToInt
 
-    //FirstName
+    //FirstName functions
     public String getFirstName() { return this.firstName; }
     public void setFirstName(String firstName) { this.firstName = firstName; }
 
-    //LastName
+    //LastName functions
     public String getLastName() { return this.lastName; }
     public void setLastName(String lastName) { this.lastName = lastName; }
 
-    // Date Stuff
-    public String getDateOfBirth() { return this.dateOfBirth; } 
+    // Date functions
+    public String getDateOfBirth() { return this.birthDate; } 
+    public void setDateOfBirth(String birthDate) {
+        if (!isValidDateFormat(birthDate)) {
+            throw new IllegalArgumentException("Invalid date format");
+        }
+        this.birthDate = birthDate;
+    }
     public String getEntryDate() { return this.ENTRY_DATE; }
+    
+    private boolean isValidDateFormat(String date) {
+        return DATE_PATTERN.matcher(date).matches();
+    }
+    
+    private int convertDateStringToInt(String dateStr) {
+        return Integer.parseInt(dateStr.replaceAll("-", ""));
+    }
 
-    // SocialID
-    public int getAssignedSocialID() { return SOCIAL_ID_NUMBER; }
+    // SocialID functions
+    public int getAssignedSocialID() { return ASSIGNED_SOCIAL_ID; }
+    private int generateSocialID() {
+        return counter.incrementAndGet();
+    }
 
-    //Comments
+    //Comments functions
     public String getComments() { return this.comments; }
     public void setComments(String comments) { this.comments = comments; }
+    
 
-    //Gender
+    //Gender functions
     public String getGender() { return this.gender; }
     public void setGender(String gender) { this.gender = gender.toLowerCase(); }
 
+    // Family relationship functions
+    public FamilyRelation[] getFamilyConnections() {
+        return this.familyConnections.toArray(new FamilyRelation[0]);
+    }
+    public void setFamilyConnections(FamilyRelation[] connections) {
+        this.familyConnections = new ArrayList<FamilyRelation>(Arrays.asList(connections));
+    }
+    public void addFamilyConnection(FamilyRelation record) {
+        this.familyConnections.add(record);
+    }
+    public void removeFamilyConnection(FamilyRelation exRelation) {
+        this.familyConnections.remove(exRelation);
+    }
+
+    // Medical Record Functions
+    public MedicalRecord[] getMedicalRecords() {
+        return this.medicalRecords.toArray(new MedicalRecord[0]);
+    }
+    public void setMedicalRecords(MedicalRecord[] records) {
+        this.medicalRecords = new ArrayList<MedicalRecord>(Arrays.asList(records));
+    }
+    public void addMedicalRecord(MedicalRecord record) {
+        this.medicalRecords.add(record);
+    }
+
+    //Personal Belonging Functions
+    public Supply[] getPersonalBelongings() {
+        return this.personalBelongings.toArray(new Supply[0]);
+    }
+    public void setPersonalBelongings(Supply[] belongings) {
+        this.personalBelongings = new ArrayList<Supply>(Arrays.asList(belongings));
+    }
+    public void addPersonalBelonging(Supply supply) {
+        this.personalBelongings.add(supply);
+    }
+    public void removePersonalBelonging(Supply unwantedSupply) {
+        this.personalBelongings.remove(unwantedSupply);
+    }
 
 }
