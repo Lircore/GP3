@@ -1,3 +1,8 @@
+/*
+Completed by: Moyo Ogunjobi
+Email: moyosoreoluwa.ogunjo@ucalgary.ca
+*/
+
 package edu.ucalgary.oop;
 
 public class Inquirer {
