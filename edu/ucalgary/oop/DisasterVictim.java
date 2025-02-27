@@ -49,5 +49,51 @@ public class DisasterVictim {
         this.setDateOfBirth(birthDate);
         this.SOCIAL_ID_NUMBER = generateSocialID();
     }
+    // Getters and Setters
+    // Based on the UML we need:
+    // - FirstName
+    // - LastName
+    // - DateOfBirth (if applicable)
+    // - AssignedSocialID
+    // - MedicalRecords
+    // - PersonalBelongings
+    // - EntryDate
+    // - Comments
+    // - Gender
+
+    // Methods
+    // Based off the UML we need:
+    // - addPersonalBelonging
+    // - removePersonalBelonging
+    // - addFamilyConnection
+    // - removeFamilyConnection
+    // - addMedicalRecord
+    // - generateSocialID
+    // - isValidDateFormat
+    // - convertDateStringToInt
+
+    //FirstName
+    public String getFirstName() { return this.firstName; }
+    public void setFirstName(String firstName) { this.firstName = firstName; }
+
+    //LastName
+    public String getLastName() { return this.lastName; }
+    public void setLastName(String lastName) { this.lastName = lastName; }
+
+    // Date Stuff
+    public String getDateOfBirth() { return this.dateOfBirth; } 
+    public String getEntryDate() { return this.ENTRY_DATE; }
+
+    // SocialID
+    public int getAssignedSocialID() { return SOCIAL_ID_NUMBER; }
+
+    //Comments
+    public String getComments() { return this.comments; }
+    public void setComments(String comments) { this.comments = comments; }
+
+    //Gender
+    public String getGender() { return this.gender; }
+    public void setGender(String gender) { this.gender = gender.toLowerCase(); }
+
 
 }
