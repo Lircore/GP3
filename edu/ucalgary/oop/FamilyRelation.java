@@ -1,3 +1,7 @@
+/*
+Completed by: Aaron Montesines
+Email: aaron.montesines@ucalgary.ca
+*/
 package edu.ucalgary.oop;
 
 public class FamilyRelation {
