@@ -1,3 +1,8 @@
+/*
+Completed by: Kareem Hussein
+Email: kareem.hussein1@ucalgary.ca
+*/
+
 package edu.ucalgary.oop;
 
 import java.util.regex.Pattern;
